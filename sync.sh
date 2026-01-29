@@ -162,9 +162,47 @@ show_file_status() {
     done
 }
 
+show_single_file_status() {
+    local filename="$1"
+    local local_path="$HOME/.claude/$filename"
+    local repo_path="$CONFIG_DIR/$filename"
+
+    if [ ! -e "$local_path" ] && [ ! -e "$repo_path" ]; then
+        return 1  # File doesn't exist anywhere
+    fi
+
+    if [ -L "$local_path" ]; then
+        local target=$(readlink "$local_path")
+        if [[ "$target" == "$CONFIG_DIR"* ]]; then
+            echo -e "  ${GREEN}✓${RESET} $filename (synced)"
+        else
+            echo -e "  ${BLUE}→${RESET} $filename (symlink to elsewhere)"
+        fi
+    elif [ -f "$local_path" ]; then
+        if [ -f "$repo_path" ]; then
+            echo -e "  ${YELLOW}⚠${RESET} $filename (exists in both - local copy)"
+        else
+            echo -e "  ${RESET}○${RESET} $filename (local only)"
+        fi
+    elif [ -f "$repo_path" ]; then
+        echo -e "  ${RESET}○${RESET} $filename (in repo, not installed)"
+    fi
+    return 0
+}
+
 show_status() {
     echo -e "${BOLD}Claude Config Sync Status${RESET}"
     echo "========================="
+    echo ""
+
+    echo -e "${BOLD}Config Files:${RESET}"
+    local has_config_files=false
+    show_single_file_status "settings.json" && has_config_files=true
+    show_single_file_status "mcp.json" && has_config_files=true
+    show_single_file_status "statusline.sh" && has_config_files=true
+    if ! $has_config_files; then
+        echo "  (none)"
+    fi
     echo ""
 
     echo -e "${BOLD}Skills:${RESET}"

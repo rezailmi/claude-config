@@ -204,6 +204,34 @@ main() {
         fi
     fi
 
+    # MCP settings
+    if [ -f "$CONFIG_DIR/mcp.json" ]; then
+        if $DRY_RUN; then
+            if has_conflict ~/.claude/mcp.json; then
+                dry_run_msg "Would backup and replace ~/.claude/mcp.json"
+            else
+                dry_run_msg "Would link mcp.json"
+            fi
+        else
+            if has_conflict ~/.claude/mcp.json; then
+                [ -z "$backup_path" ] && backup_path=$(create_backup)
+                if handle_conflict "$CONFIG_DIR/mcp.json" ~/.claude/mcp.json "$backup_path" "mcp.json"; then
+                    backed_up_items+=("mcp.json")
+                    rm -rf ~/.claude/mcp.json
+                    ln -sf "$CONFIG_DIR/mcp.json" ~/.claude/mcp.json
+                    echo -e "${GREEN}✓${RESET} mcp.json (replaced, backup saved)"
+                    has_changes=true
+                else
+                    echo -e "${YELLOW}○${RESET} mcp.json (kept local)"
+                fi
+            else
+                ln -sf "$CONFIG_DIR/mcp.json" ~/.claude/mcp.json
+                echo -e "${GREEN}✓${RESET} mcp.json"
+                has_changes=true
+            fi
+        fi
+    fi
+
     # Statusline
     if [ -f "$CONFIG_DIR/statusline.sh" ]; then
         if $DRY_RUN; then
