@@ -1,2 +1,19 @@
 .backup/
 .DS_Store
+
+# gstack bundle (cloned separately; contains its own .git)
+skills/gstack/
+skills/browse
+skills/design-consultation
+skills/design-review
+skills/document-release
+skills/gstack-upgrade
+skills/plan-ceo-review
+skills/plan-design-review
+skills/plan-eng-review
+skills/qa
+skills/qa-only
+skills/retro
+skills/review
+skills/setup-browser-cookies
+skills/ship
