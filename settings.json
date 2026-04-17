@@ -3,9 +3,6 @@
     "commit": "",
     "pr": ""
   },
-  "env": {
-    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1"
-  },
   "permissions": {
     "allow": [
       "Bash(gh:*)",
@@ -47,11 +44,11 @@
     }
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "high",
-  "voiceEnabled": true,
+  "effortLevel": "medium",
   "voice": {
     "enabled": true,
     "mode": "hold"
   },
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "voiceEnabled": true
 }
