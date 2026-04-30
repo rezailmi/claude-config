@@ -12,8 +12,10 @@
     ],
     "deny": [
       "Read(.env*)"
-    ]
+    ],
+    "defaultMode": "auto"
   },
+  "model": "opus[1m]",
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh"
@@ -34,7 +36,8 @@
       "source": {
         "source": "github",
         "repo": "EveryInc/compound-engineering-plugin"
-      }
+      },
+      "autoUpdate": true
     },
     "flow-marketplace": {
       "source": {
@@ -44,11 +47,12 @@
     }
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "medium",
+  "effortLevel": "xhigh",
   "voice": {
     "enabled": true,
     "mode": "hold"
   },
   "skipDangerousModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true,
   "voiceEnabled": true
 }
